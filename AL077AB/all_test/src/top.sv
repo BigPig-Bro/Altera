@@ -18,8 +18,16 @@ module top(
     output      [2:0]   o_hdmi_d_p,
     output      [2:0]   o_hdmi_d_n,
 
-    output      [33:0]  o_exter_io1, o_exter_io2
+    output              o_rgmii_rst_n,
+
+    output      [33:0]  o_exter_io1, 
+    output      [16:0]  o_exter_io2
 );
+
+always@(posedge i_sys_clk)begin
+    o_rgmii_rst_n <= 1'b1; //不然网卡起不来
+end
+
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////                 测试时钟输入            /////////////////////////////
@@ -148,24 +156,7 @@ assign o_exter_io2[12] = clk_A ;
 assign o_exter_io2[13] = ~clk_A ;
 assign o_exter_io2[14] = clk_A ;
 assign o_exter_io2[15] = ~clk_A ;
-assign o_exter_io2[16] = clk_A ;
-assign o_exter_io2[17] = ~clk_A ;
-assign o_exter_io2[18] = clk_A ;
-assign o_exter_io2[19] = ~clk_A ;
-assign o_exter_io2[20] = clk_A ;
-assign o_exter_io2[21] = ~clk_A ;
-assign o_exter_io2[22] = clk_A ;
-assign o_exter_io2[23] = ~clk_A ;
-assign o_exter_io2[24] = clk_A ;
-assign o_exter_io2[25] = ~clk_A ;
-assign o_exter_io2[26] = clk_A ;
-assign o_exter_io2[27] = ~clk_A ;
-assign o_exter_io2[28] = clk_A ;
-assign o_exter_io2[29] = ~clk_A ;
-assign o_exter_io2[30] = clk_A ;
-assign o_exter_io2[31] = ~clk_A ;
-assign o_exter_io2[32] = clk_A ;
-assign o_exter_io2[33] = ~clk_A ;
+assign o_exter_io2[16] = ~clk_A ; //为了同向闪烁
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////

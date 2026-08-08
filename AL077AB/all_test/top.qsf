@@ -69,6 +69,9 @@ set_location_assignment PIN_T20 -to o_led[1]
 set_location_assignment PIN_T19 -to o_led[2]
 set_location_assignment PIN_U22 -to o_led[3]
 
+set_location_assignment PIN_W8 -to o_rgmii_rst_n
+
+
 set_location_assignment PIN_A22 -to i_uart_rx
 set_location_assignment PIN_B22 -to o_uart_tx
 
