@@ -64,7 +64,6 @@ set_location_assignment PIN_Y10 -to i_rst_n
 set_location_assignment PIN_A22 -to i_uart_rx
 set_location_assignment PIN_B22 -to o_uart_tx
 
-set_location_assignment PIN_W8 -to o_rgmii_rst_n
 # AL077AB 
 set_location_assignment PIN_U16 -to i_gmii_rx_clk
 set_location_assignment PIN_Y11 -to i_gmii_rx_valid
