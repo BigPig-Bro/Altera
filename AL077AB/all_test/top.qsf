@@ -71,6 +71,34 @@ set_location_assignment PIN_U22 -to o_led[3]
 
 set_location_assignment PIN_W8 -to o_rgmii_rst_n
 
+#RGMII 网口0（IC2，板边侧）
+set_location_assignment PIN_AA10 -to i_rgmii0_rxc
+set_location_assignment PIN_V9 -to i_rgmii0_rxctl
+set_location_assignment PIN_AB11 -to i_rgmii0_rxd[0]
+set_location_assignment PIN_AB10 -to i_rgmii0_rxd[1]
+set_location_assignment PIN_AA9 -to i_rgmii0_rxd[2]
+set_location_assignment PIN_AB8 -to i_rgmii0_rxd[3]
+set_location_assignment PIN_AA7 -to o_rgmii0_txc
+set_location_assignment PIN_Y7 -to o_rgmii0_txctl
+set_location_assignment PIN_AA8 -to o_rgmii0_txd[0]
+set_location_assignment PIN_AB7 -to o_rgmii0_txd[1]
+set_location_assignment PIN_Y9 -to o_rgmii0_txd[2]
+set_location_assignment PIN_W7 -to o_rgmii0_txd[3]
+
+#RGMII 网口1（IC1，USB侧）
+set_location_assignment PIN_AB17 -to i_rgmii1_rxc
+set_location_assignment PIN_Y16 -to i_rgmii1_rxctl
+set_location_assignment PIN_Y17 -to i_rgmii1_rxd[0]
+set_location_assignment PIN_Y15 -to i_rgmii1_rxd[1]
+set_location_assignment PIN_Y14 -to i_rgmii1_rxd[2]
+set_location_assignment PIN_AB16 -to i_rgmii1_rxd[3]
+set_location_assignment PIN_W13 -to o_rgmii1_txc
+set_location_assignment PIN_Y12 -to o_rgmii1_txctl
+set_location_assignment PIN_AA15 -to o_rgmii1_txd[0]
+set_location_assignment PIN_AB15 -to o_rgmii1_txd[1]
+set_location_assignment PIN_AB13 -to o_rgmii1_txd[2]
+set_location_assignment PIN_W12 -to o_rgmii1_txd[3]
+
 
 set_location_assignment PIN_A22 -to i_uart_rx
 set_location_assignment PIN_B22 -to o_uart_tx
@@ -148,6 +176,15 @@ set_global_assignment -name VERILOG_FILE src/hdmi/hdmi_colorbar.v
 set_global_assignment -name VERILOG_FILE src/hdmi/dvi_transmitter_top.v
 set_global_assignment -name VERILOG_FILE src/hdmi/dvi_encoder.v
 set_global_assignment -name SYSTEMVERILOG_FILE src/top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/udp_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/tx_mux.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/rx_mux.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/icmp.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/gmii2rgmii.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/gmii_tx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/gmii_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/gmii_rx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE src/udp/arp.sv
 set_global_assignment -name VERILOG_FILE src/sd_card/spi_master.v
 set_global_assignment -name VERILOG_FILE src/sd_card/sd_card_top.v
 set_global_assignment -name VERILOG_FILE src/sd_card/sd_card_sec_read_write.v

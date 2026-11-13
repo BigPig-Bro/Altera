@@ -20,6 +20,22 @@ module top(
 
     output              o_rgmii_rst_n,
 
+    //RGMII 网口0（IC2，板边侧）
+    input               i_rgmii0_rxc,
+    input               i_rgmii0_rxctl,
+    input       [3:0]   i_rgmii0_rxd,
+    output              o_rgmii0_txc,
+    output              o_rgmii0_txctl,
+    output      [3:0]   o_rgmii0_txd,
+
+    //RGMII 网口1（IC1，USB侧）
+    input               i_rgmii1_rxc,
+    input               i_rgmii1_rxctl,
+    input       [3:0]   i_rgmii1_rxd,
+    output              o_rgmii1_txc,
+    output              o_rgmii1_txctl,
+    output      [3:0]   o_rgmii1_txd,
+
     output      [33:0]  o_exter_io1, 
     output      [16:0]  o_exter_io2
 );
@@ -174,5 +190,65 @@ hdmi_colorbar hdmi_colorbar_m0(
     .tmds_data_n        (o_hdmi_d_n            )
 );
 
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////                 测试RGMII千兆网口          /////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//现象：PC（192.168.1.100）分别Ping 192.168.1.101 / 192.168.1.102，能通即说明对应网口正常
+//说明：两个网口各一套独立的ARP/ICMP协议栈，仅做Ping应答
+
+localparam P_LOCAL_MAC0 = 48'h0202_DEAD_BE01;                 //网口0本地MAC地址
+localparam P_LOCAL_IP0  = {8'd192, 8'd168, 8'd1, 8'd101};     //网口0本地IP地址
+localparam P_LOCAL_MAC1 = 48'h0202_DEAD_BE02;                 //网口1本地MAC地址
+localparam P_LOCAL_IP1  = {8'd192, 8'd168, 8'd1, 8'd102};     //网口1本地IP地址
+
+//网口0（IC2，板边侧）192.168.1.101
+udp_top #(
+    .P_LOCAL_MAC    (P_LOCAL_MAC0               ),
+    .P_LOCAL_IP     (P_LOCAL_IP0                )
+) udp_top_m0 (
+    .i_rst_n        (i_key[0]                   ),
+
+    .i_rgmii_rxc    (i_rgmii0_rxc               ),
+    .i_rgmii_rxd    (i_rgmii0_rxd               ),
+    .i_rgmii_rxctl  (i_rgmii0_rxctl             ),
+    .o_rgmii_txd    (o_rgmii0_txd               ),
+    .o_rgmii_txctl  (o_rgmii0_txctl             ),
+    .o_rgmii_txc    (o_rgmii0_txc               ),
+
+    .o_usr_clk      (                           ),
+    .o_usr_rx_data  (                           ),
+    .o_usr_rx_valid (                           ),
+    .o_usr_rx_last  (                           ),
+    .i_usr_tx_data  (8'h00                      ),
+    .i_usr_tx_wr    (1'b0                       ),
+    .i_usr_tx_last  (1'b0                       ),
+    .o_tx_busy      (                           )
+);
+
+//网口1（IC1，USB侧）192.168.1.102
+udp_top #(
+    .P_LOCAL_MAC    (P_LOCAL_MAC1               ),
+    .P_LOCAL_IP     (P_LOCAL_IP1                )
+) udp_top_m1 (
+    .i_rst_n        (i_key[0]                   ),
+
+    .i_rgmii_rxc    (i_rgmii1_rxc               ),
+    .i_rgmii_rxd    (i_rgmii1_rxd               ),
+    .i_rgmii_rxctl  (i_rgmii1_rxctl             ),
+    .o_rgmii_txd    (o_rgmii1_txd               ),
+    .o_rgmii_txctl  (o_rgmii1_txctl             ),
+    .o_rgmii_txc    (o_rgmii1_txc               ),
+
+    .o_usr_clk      (                           ),
+    .o_usr_rx_data  (                           ),
+    .o_usr_rx_valid (                           ),
+    .o_usr_rx_last  (                           ),
+    .i_usr_tx_data  (8'h00                      ),
+    .i_usr_tx_wr    (1'b0                       ),
+    .i_usr_tx_last  (1'b0                       ),
+    .o_tx_busy      (                           )
+);
 
 endmodule 
